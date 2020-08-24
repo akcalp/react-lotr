@@ -1,5 +1,6 @@
-import React, {useEffect} from "react";
+import React  from "react";
 import {useQuery} from "react-query";
+import Character from "./Character";
 import {FixedSizeList as List} from "react-window";
 
 
@@ -17,14 +18,9 @@ const Characters = () => {
     };
 
     const {data, status} = useQuery("characters", fetchCharacters);
-    // console.log(data);
+    console.log(data);
 
-    const Row = ({index, style}) => (
-        <div style={style}>
-            {data.docs[index].name}
-            {/*{data.docs.map(char => <div key={char[index]}>{char.name}</div>)}*/}
-        </div>
-    );
+
 
 
     return (
@@ -37,17 +33,9 @@ const Characters = () => {
                 <div>Error fetching data</div>
             )}
             {status === "success" && (
-                <List
-                    className="List"
-                    height={window.innerHeight - 20}
-                    itemCount={1000}
-                    itemSize={35}
-                    width={window.innerWidth}
-                    overScanCount={4}
-                >
-                    {Row}
-                </List>
-
+                <div>
+                    {data.docs.map(character => <Character key={character._id} character={character}/>)}
+                </div>
             )}
         </div>
     )
